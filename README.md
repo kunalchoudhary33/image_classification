@@ -7,3 +7,4 @@
 
 1. tensorflow 1.14
 2. python 3.6
+3. neptune
