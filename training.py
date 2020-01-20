@@ -117,7 +117,9 @@ def create_VGG16_model():
     predictions = Dense((PARAMS['num_classes']), activation='softmax')(x)
 
     model = Model(input=base_model.input, output=predictions)
-    
+    for layers in model.layers[:14]:
+        layers.trainable = False
+
     sgd = optimizers.SGD(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(loss = 'categorical_crossentropy',
                  optimizer = sgd,
