@@ -66,6 +66,8 @@ PARAMS = {'Architecture':'VGG16 Repair Replace Model with 1024 dense layer size 
           'kernel_size':(3, 3),
           'pool_size':(2,2),
           'n_epochs': 100,
+          'train_count':17743,
+          'val_count':3343
           'train_path':'/home/paperspace/Kunal/CNN/RR_CNN/ds-dvc-data/Training/',
           'test_path':'/home/paperspace/Kunal/CNN/RR_CNN/ds-dvc-data/Validation/',
           'model_path':'/home/paperspace/Kunal/CNN/RR_CNN/model/nov_16_baseline_repair_replace_model.hdf5',
@@ -154,11 +156,11 @@ class NeptuneMonitor(Callback):
         self.current_epoch += 1
 
 
-neptune.init(api_token=api_token,
+neptune.init(api_token=PARAMS['api_token'],
              project_qualified_name='kunalcgi/sandbox')
 
 # retrieve project
-project = neptune.Session(api_token)\
+project = neptune.Session(PARAMS['api_token'])\
     .get_project('kunalcgi/sandbox')
 
 
@@ -182,10 +184,10 @@ class_weights = class_weight.compute_class_weight('balanced',np.unique(train_gen
 print ('---------------------Model training started--------------')
 model.fit_generator(
         train_generator,
-        steps_per_epoch=1000 // PARAMS['batch_size'],
+        steps_per_epoch=PARAMS['train_count'] // PARAMS['batch_size'],
         epochs=PARAMS['n_epochs'],
         validation_data=test_generator,
-        validation_steps=150 // PARAMS['batch_size'],
+        validation_steps=PARAMS['val_count'] // PARAMS['batch_size'],
         callbacks=callbacks_list,
         class_weight=class_weights)
 
