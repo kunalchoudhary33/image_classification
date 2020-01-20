@@ -70,7 +70,8 @@ PARAMS = {'Architecture':'VGG16 Repair Replace Model with 1024 dense layer size 
           'test_path':'/home/paperspace/Kunal/CNN/RR_CNN/ds-dvc-data/Validation/',
           'model_path':'/home/paperspace/Kunal/CNN/RR_CNN/model/nov_16_baseline_repair_replace_model.hdf5',
           'weight_path':'/home/paperspace/Kunal/CNN/RR_CNN/model/saved_models/nov_16_baseline_repair_replace_weight.hdf5',
-          'log_file':'/home/paperspace/Kunal/CNN/RR_CNN/model/saved_models/nov_16_baseline_log_file.csv'}
+          'log_file':'/home/paperspace/Kunal/CNN/RR_CNN/model/saved_models/nov_16_baseline_log_file.csv',
+          'api_token':'*****Get api token*****'}
 
 #Data Generator
 train_datagen = ImageDataGenerator(
@@ -152,12 +153,12 @@ class NeptuneMonitor(Callback):
 
         self.current_epoch += 1
 
-api='eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vdWkubmVwdHVuZS5haSIsImFwaV91cmwiOiJodHRwczovL3VpLm5lcHR1bmUuYWkiLCJhcGlfa2V5IjoiYjgzZmRhNDQtMmM1OS00ODczLTljNTEtZDJjNTMwMzE1OGYzIn0='
-neptune.init(api_token=api,
+
+neptune.init(api_token=api_token,
              project_qualified_name='kunalcgi/sandbox')
 
 # retrieve project
-project = neptune.Session(api)\
+project = neptune.Session(api_token)\
     .get_project('kunalcgi/sandbox')
 
 
