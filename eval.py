@@ -45,29 +45,37 @@ PARAMS = {'Architecture':'VGG16 Repair Replace Model with 1024 dense layer size 
           'log_file':'/home/paperspace/Kunal/CNN/RR_CNN/model/saved_models/nov_16_baseline_log_file.csv'}
 
 
-
-model = load_model(PARAMS['model_path'])
-csv_log = pd.read_csv(PARAMS['log_file'])
+# Load model and csv log files
+def load_mode_log():
+    model = load_model(PARAMS['model_path'])
+    csv_log = pd.read_csv(PARAMS['log_file'])
+    return model, csv_log
+model, csv_log = load_mode_log()
 
 # summarize history for accuracy
-plt.plot(csv_log['acc'])
-plt.plot(csv_log['val_acc'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'])
-plt.savefig('Model_Accuracy_graph.jpg')
-plt.show()
+def plot_summary_train():
+    plt.plot(csv_log['acc'])
+    plt.plot(csv_log['val_acc'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'])
+    plt.savefig('Model_Accuracy_graph.jpg')
+    plt.show()
 
 # summarize history for loss
-plt.plot(csv_log['loss'])
-plt.plot(csv_log['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'])
-plt.savefig('Model_loss_graph.jpg')
-plt.show() 
+def plot_summary_val():
+    plt.plot(csv_log['loss'])
+    plt.plot(csv_log['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'])
+    plt.savefig('Model_loss_graph.jpg')
+    plt.show() 
+
+plot_summary_train()
+plot_summary_val()
 
 
 def load_images(path):
